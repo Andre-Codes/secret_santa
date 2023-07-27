@@ -1,6 +1,6 @@
 import random
 
-# List of lists where each sublist contains people related to each other
+# List of sublists containing people related to each other
 related = [["Andre", "Shannon"], ["Alex", "Madelyn"], ["Ian", "Lauren", "Peter"], ["Andrea"]]
 
 # Get the length of the largest group of related people
@@ -15,7 +15,7 @@ friends = []
 # Initialize an empty dictionary to hold the secret santa assignments
 secret_santas = {}
 
-# Flatten the list, removing relation sublists
+# Flatten the list, removing relation sublists while maintaing positions
 # Go through each group of related people
 for person in related:
     # If the group is a list or relations, extend the friends list with the group
