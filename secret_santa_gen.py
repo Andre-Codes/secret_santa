@@ -1,39 +1,4 @@
 import random
-import pandas as pd
-
-friends = ["Andre", "Shannon", "Alex", "Madelyn", "Ian", "Lauren", "Andrea"]
-
-related = [("Andre", "Shannon"), ("Alex", "Madelyn"), ("Ian", "Lauren"), "Andrea"]
-
-santas = friends.copy()
-random.shuffle(santas)
-
-# Create a dictionary to hold the secret santa assignments
-secret_santas = {}
-
-# Assign each person to another, skipping if related
-while (len(secret_santas) < len(friends)):
-    for friend in friends:
-        for santa in santas:
-            # Check if the friend and potential receiver are related
-            if friend != santa and (friend, santa) not in related and (santa, friend) not in related:
-                # Assign the receiver and remove them from the list
-                secret_santas[friend] = santa
-                santas.remove(santa)
-                break
-    if len(secret_santas) == len(friends):
-        df = pd.DataFrame(list(secret_santas.items()), columns=['Santa', 'Receiver'])
-        print(df)
-    else:
-        santas = friends.copy()
-        random.shuffle(santas)
-        secret_santas = {}
-        
-
-##########################################
-##########################################
-# ALTERNATE METHOD (simplified)
-
 
 # List of lists where each sublist contains people related to each other
 related = [["Andre", "Shannon"], ["Alex", "Madelyn"], ["Ian", "Lauren", "Peter"], ["Andrea"]]
