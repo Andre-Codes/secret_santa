@@ -1,4 +1,4 @@
-import random
+from random import shuffle
 import pandas as pd
 
 
@@ -23,7 +23,7 @@ people = [
 #            ["Emma", "Andrew"], ["Charlotte"], ["Robert"]]
 
 # Shuffle the friends (maintaining relations)
-random.shuffle(people)
+shuffle(people)
 
 if contains_relationship(people):
     # Get the length of the largest group of related people
@@ -31,7 +31,7 @@ if contains_relationship(people):
     max_relation = len(max(people, key=len))
     # Shuffle people within a relationship for increased randomness
     for relations in people:
-        random.shuffle(relations)
+        shuffle(relations)
     # Flatten the list to prepare for assignments
     people = [name for sublist in people for name in sublist]
     # Get the total count of individuals
