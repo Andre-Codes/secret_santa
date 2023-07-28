@@ -7,12 +7,11 @@ related = [["Andre", "Shannon", "Arwen"], ["Alex", "Madelyn"], ["Ian", "Lauren"]
 random.shuffle(related)
 
 # Get the length of the largest group of related people
-# This is the number to skip by, ensuring related people do not get paired
+# This is the number to skip by when assigning pairs, ensuring related people do not get paired
 max_relation = len(max(related, key=len))
 
-# Flatten the list to prepare for
+# Flatten the list to prepare for assignments
 all_friends = [name for sublist in related for name in sublist]
-all_friends
 
 name_cnt = len(all_friends)
 
@@ -23,12 +22,11 @@ if max_relation > (name_cnt / 2):
 
 # Initialize an empty dictionary to hold the secret santa assignments
 secret_santas = {}
-     
+
 # Append the first 'max_relation' friends to the end of the friends list to allow
 # wrapping around for the last few friends to have a partner
 all_friends.extend(all_friends[:max_relation])
-all_friends
-        
+
 # Go through each friend
 for index, santa in enumerate(all_friends):
     # If the friend is not one of the last 'max_relation' (appended) friends in the list
@@ -37,7 +35,7 @@ for index, santa in enumerate(all_friends):
         secret_santas[santa] = all_friends[index+max_relation]
 
 # Print the secret santa assignments
-secret_santas
+print(secret_santas)
 
 
 
