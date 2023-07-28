@@ -11,12 +11,16 @@ def contains_relationship(people_list):
 
 # List containing the people to be assigned to each other
 # Can contain lists containing people related to each other
-people = [["Andre", "Shannon", "Arwen"], ["Jesse", "Miranda"], ["Andrea"],
-          ["Alex", "Madelyn"], ["Ian", "Lauren"]]
+people = [
+    ["John", "Jane"], ["Michael"], ["Emily", "Robert"],
+    ["Olivia"], ["William"], ["Sophia", "James", "Ava"],
+    ["David", "Mia"], ["Joseph"], ["Isabella"], ["Daniel"],
+    ["Emma"], ["Andrew"], ["Charlotte", "Matthew"], ["Amelia"]
+]
 
 # EXAMPLE - not enough non-related people
-# related = [["Andre", "Shannon", "Arwen", "Jesse", "Miranda", "Andrea"],
-#            ["Alex", "Madelyn"], ["Ian", "Lauren"]]
+# related = [["Sophia", "James", "Ava", "John", "Jane", "Michael"],
+#            ["Emma", "Andrew"], ["Charlotte"], ["Robert"]]
 
 # Shuffle the friends (maintaining relations)
 random.shuffle(people)
