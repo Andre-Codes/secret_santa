@@ -24,7 +24,7 @@ if contains_relationship(people):
     # Get the length of the largest group of related people
     # This is the number to skip by when assigning pairs, ensuring related people do not get paired
     max_relation = len(max(people, key=len))
-    # Shuffle people within a relationship
+    # Shuffle people within a relationship for increased randomness
     for relations in people:
         random.shuffle(relations)
     # Flatten the list to prepare for assignments
