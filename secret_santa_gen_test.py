@@ -3,12 +3,11 @@ import random as rnd
 
 
 
-
 def generate_santas(people_data):
     
     while True:
         
-        santas = list(people_df['Person'].values)
+        santas = list(people_data['Person'].values)
         people_data['Giftee'] = None
         i=0
         
@@ -47,6 +46,16 @@ def generate_santas(people_data):
                 
     return people_data
         
+
+# Convert JSON to a DataFrame
+def create_df(df):
+    df = pd.DataFrame.from_dict(people, orient='index')
+
+    df.reset_index(inplace=True)
+    df.rename(columns={'index': 'Person'}, inplace=True)
+    
+    return df
+
 
 people = {
     'Andre': {
@@ -87,13 +96,8 @@ people = {
     }
 }
 
-# Convert JSON to a DataFrame
-people_df = pd.DataFrame.from_dict(people, orient='index')
+players = create_df(people)
 
-people_df.reset_index(inplace=True)
-people_df.rename(columns={'index': 'Person'}, inplace=True)
-people_df
-
-results = generate_santas(people_df)
+results = generate_santas(players)
 
 results
