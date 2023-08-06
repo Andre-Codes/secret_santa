@@ -6,18 +6,18 @@ import random as rnd
 
 def generate_santas(people_data):
     
-    santas = list(people_df['Person'].values)
-    people_data['Giftee'] = None
-    b = None
-    i=0
-
     while True:
+        
+        santas = list(people_df['Person'].values)
+        people_data['Giftee'] = None
+        i=0
+        
         try:
             while i < len(people_data):
                 
                 if people_data['Giftee'].isnull().sum() < len(santas):
                     print("NOT ENOUGH GIFTEES AVAILABLE")
-                    # break
+                    break
                 
                 i+=1
                 
@@ -35,14 +35,17 @@ def generate_santas(people_data):
 
                 people_data.loc[people_data['Person'] == santa, 'Giftee'] = giftee
             
-            break
+            missing_giftee = people_data['Giftee'].isnull().sum()
+            
+            if missing_giftee == 0:
+                break 
+            else:
+                "Trying again..."    
         
         except ValueError:
             print("Trying again...")
-            
-    missing_giftee = people_data['Giftee'].isnull().sum()
-    
-    return missing_giftee, people_data
+                
+    return people_data
         
 
 people = {
@@ -59,7 +62,7 @@ people = {
         'Email': 'charlie@example.com'
     },
     'Madz': {
-        'Related': ['Lydia', 'Alex'],
+        'Related': ['Lydia', 'Lydia'],
         'Email': 'david@example.com'
     },
     'Lydia': {
