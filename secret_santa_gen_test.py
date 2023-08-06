@@ -1,60 +1,96 @@
 import pandas as pd
 import random as rnd
 
-# still running into issue of sometimes a santa has no giftee options
 
 
-relationships = {
-    "Andre": ['Shannon'],
-    "Shannon": ['Andre'],
-    "Alex": ['Madz'],
-    "Madz": ['Alex'],
-    "Andrea": [],
-    "Ian": ['Lauren', 'Andre'],
-    "Lauren": ['Ian'],
-    "Allison": [],
-    "Jesse": ['Miranda'],
-    "Miranda": ['Jesse']
+
+def generate_santas(people_data):
+    
+    santas = list(people_df['Person'].values)
+    people_data['Giftee'] = None
+    b = None
+    i=0
+
+    while True:
+        try:
+            while i < len(people_data):
+                
+                if people_data['Giftee'].isnull().sum() < len(santas):
+                    print("NOT ENOUGH GIFTEES AVAILABLE")
+                    # break
+                
+                i+=1
+                
+                rand_santa = rnd.randint(0, len(santas)-1)
+
+                santa = people_data[people_data['Person'].isin(santas)]['Person'].iloc[rand_santa]
+
+                santas.remove(santa)
+
+                all_others = people_data[people_data["Person"] != santa]
+
+                not_related = all_others[all_others["Related"].apply(lambda related: santa not in related)]
+
+                giftee = not_related[~not_related['Person'].isin(people_data['Giftee'])]['Person'].sample(n=1).iloc[0]
+
+                people_data.loc[people_data['Person'] == santa, 'Giftee'] = giftee
+            
+            break
+        
+        except ValueError:
+            print("Trying again...")
+            
+    missing_giftee = people_data['Giftee'].isnull().sum()
+    
+    return missing_giftee, people_data
+        
+
+people = {
+    'Andre': {
+        'Related': ['Shannon'],
+        'Email': 'alice@example.com'
+    },
+    'Shannon': {
+        'Related': ['Andre'],
+        'Email': 'bob@example.com'
+    },
+    'Alex': {
+        'Related': ['Madz'],
+        'Email': 'charlie@example.com'
+    },
+    'Madz': {
+        'Related': ['Lydia', 'Alex'],
+        'Email': 'david@example.com'
+    },
+    'Lydia': {
+        'Related': ['Madelyn'],
+        'Email': 'david@example.com'
+    },
+    'Ian': {
+        'Related': ['Lauren'],
+        'Email': 'david@example.com'
+    },
+    'Lauren': {
+        'Related': ['Ian'],
+        'Email': 'david@example.com'
+    },
+    'Andrea': {
+        'Related': [],
+        'Email': 'david@example.com'
+    },
+    'Allison': {
+        'Related': [],
+        'Email': 'david@example.com'
+    }
 }
 
-a = pd.DataFrame(relationships.items(), columns=['Person', 'Related'])
-a
+# Convert JSON to a DataFrame
+people_df = pd.DataFrame.from_dict(people, orient='index')
 
-santas = list(relationships.keys())
-a['Giftee'] = None
-b = None
-i=0
+people_df.reset_index(inplace=True)
+people_df.rename(columns={'index': 'Person'}, inplace=True)
+people_df
 
-while i < len(a):
-    
-    if a['Giftee'].isnull().sum() < len(santas):
-        print("NOT ENOUGH GIFTEES AVAILABLE")
-        # break
-    
-    i+=1
-    
-    num = rnd.randint(0, len(santas)-1)
+results = generate_santas(people_df)
 
-    santa = a[a['Person'].isin(santas)]['Person'].iloc[num]
-
-    santas.remove(santa)
-
-    b = a[a["Person"] != santa]
-
-    not_related = b[b["Related"].apply(lambda x: santa not in x)]
-
-    giftee_choice = not_related[~not_related['Person'].isin(a['Giftee'])]['Person'].sample(n=1).iloc[0]
-
-    a.loc[a['Person'] == santa, 'Giftee'] = giftee_choice
-    
-a
-
-emails = {
-    "Andre": "ama@gmail.com"
-}
-
-emails[a['Person'][0]]
-
-a[['Person', 'Giftee']]
-
-
+results
