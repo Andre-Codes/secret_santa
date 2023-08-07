@@ -48,8 +48,8 @@ def generate_santas(people_data):
         
 
 # Convert JSON to a DataFrame
-def create_df(df):
-    df = pd.DataFrame.from_dict(people, orient='index')
+def create_df(data):
+    df = pd.DataFrame.from_dict(data, orient='index')
 
     df.reset_index(inplace=True)
     df.rename(columns={'index': 'Person'}, inplace=True)
@@ -71,7 +71,7 @@ people = {
         'Email': 'charlie@example.com'
     },
     'Madz': {
-        'Related': ['Lydia', 'Lydia'],
+        'Related': ['Alex', 'Lydia'],
         'Email': 'david@example.com'
     },
     'Lydia': {
